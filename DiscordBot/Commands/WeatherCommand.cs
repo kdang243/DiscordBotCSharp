@@ -33,7 +33,7 @@ namespace DiscordBot.Commands
 
             using (WebClient wc = new WebClient())
             {
-                string url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=bac1df9616bdc059267e7c5ef270e005#";
+                string url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=";
 
                 try
                 {
