@@ -28,7 +28,8 @@ namespace DiscordBot
 
             var config = new DiscordConfiguration
             {
-                Token = configJson.Token,
+                //Token = configJson.Token,
+                Token = "",
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 LogLevel = LogLevel.Debug,
@@ -52,6 +53,8 @@ namespace DiscordBot
             Commands.RegisterCommands<FunCommands>();
             Commands.RegisterCommands<ReminderCommands>();
             Commands.RegisterCommands<PrankCommands>();
+            Commands.RegisterCommands<WeatherCommand>();
+
 
             await Client.ConnectAsync();
 
