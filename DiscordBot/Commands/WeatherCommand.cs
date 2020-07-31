@@ -33,7 +33,7 @@ namespace DiscordBot.Commands
 
             using (WebClient wc = new WebClient())
             {
-                string url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=";
+                string url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=#";
 
                 try
                 {
@@ -69,6 +69,58 @@ namespace DiscordBot.Commands
             
 
         }
-        
+
+        [Command("forecast")]
+        [Description("Get the forecast for the weather of a city for the next 5 days every (multiplier * 3) hours!")]
+        public async Task ForeCast(CommandContext ctx, string cityName, [Description("Provides info for the weather every (multiplier * 3) hours.")] int multiplier = 8)
+        {
+            string json = "{\"cod\": \"404\",\"message\": \"city not found\"}";
+            string name = "";
+            string country = "";
+            List<MyForecastClass.List> list;
+
+            using (WebClient wc = new WebClient())
+            {
+                string url = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=bac1df9616bdc059267e7c5ef270e005#";
+
+                try
+                {
+                    json = wc.DownloadString(url);
+                }
+                catch (WebException e)
+                {
+                    await ctx.Channel.SendMessageAsync("We couldn't find the city you were looking for.").ConfigureAwait(false);
+                }
+
+                var result = JsonConvert.DeserializeObject<MyForecastClass.Root>(json);
+
+                name = result.city.name;
+                country = result.city.country;
+
+                list = result.list;
+            }
+
+            if (multiplier < 1)
+            {
+                await ctx.Channel.SendMessageAsync("Please input a multiplier thats >= 1.").ConfigureAwait(false);
+            }
+            else
+            {
+                await ctx.Channel.SendMessageAsync("City name: " + name + ", " + country).ConfigureAwait(false);
+                for (int i = 0; i < list.Count; i = i + multiplier)
+                {
+                    var dt_txt = list[i].dt_txt;
+                    var temp = list[i].main.temp;
+                    var description = list[i].weather[0].description;
+                    var rain = list[i].rain.threeH;
+                    await ctx.Channel.SendMessageAsync($"Index: {i} \n Time : {dt_txt} \n Temp : {temp} \n Description : {description} \n Rain (Vol in last 3 hours in mm) : {rain} \n \n").ConfigureAwait(false);
+                }
+            }
+
+            
+
+
+        }
+
     }
 }
