@@ -94,8 +94,9 @@ namespace DiscordBot.Commands
 
                 var result = JsonConvert.DeserializeObject<MyForecastClass.Root>(json);
 
-                name = result.city.name;
+                name = result.city.name; 
                 country = result.city.country;
+
 
                 list = result.list;
             }
@@ -117,8 +118,11 @@ namespace DiscordBot.Commands
                 }
             }
 
-            
+        }
 
+        [Command("find")]
+        public async Task Find(CommandContext ctx)
+        {
 
         }
 
