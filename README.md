@@ -1,0 +1,7 @@
+# DiscordBotCSharp
+A bot for a discord server that has a variety of commands for users to use.
+
+
+Here's a simple discord bot that I made using c#. It currently uses the Open Weather Map API for it's weather commands (provides the user in a discord channel with information regarding the weather in any given city in the world).
+The code right now will not run as I've removed the discord bot's token and the api's key for safety.
+I will try to update the bot every now and then with random commands that I think would be useful for a user.
